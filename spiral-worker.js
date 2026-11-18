@@ -1,4 +1,4 @@
-/* Spiralographie Studio V5 — moteur adaptatif, détail local et style multicentre */
+/* Spiralographie Studio V6 — moteur géométrique, analyse Sobel & color sampling */
 self.onmessage = ({data}) => {
   try {
     const {gray,width,height,settings,style}=data;
@@ -10,7 +10,8 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 function build(gray,w,h,s,style){
  const SIZE=1000,C=500,R=465,turns=+s.turns,density=+s.density/100,fidelity=+s.fidelity/100,rot=+s.rotation*Math.PI/180,line=+s.line/10;
  const cx=+s.centerX||0,cy=+s.centerY||0,detail=(+s.detail||55)/100,edgeBoost=(+s.edges||55)/100,paths=[];
- // Sobel edge map: reinforces eyes, lips, hair and landscape boundaries without external AI services.
+ 
+ // Carte de contour Sobel
  const edge=new Float32Array(w*h);
  for(let y=1;y<h-1;y++) for(let x=1;x<w-1;x++){
    const i=y*w+x;
@@ -22,7 +23,6 @@ function build(gray,w,h,s,style){
  const sample=(x,y)=>{
    const ix=clamp(Math.round((x/SIZE+.5)*(w-1)),1,w-2),iy=clamp(Math.round((y/SIZE+.5)*(h-1)),1,h-2),i=iy*w+ix;
    let v=raw(x,y);
-   // Gentle local contrast approximation, then mix in edge energy.
    const local=(raw(x-8,y)+raw(x+8,y)+raw(x,y-8)+raw(x,y+8))/4;
    const enhanced=clamp(.5+(v-local)*(.65+detail*1.25)+(v-.5)*(.7+detail*.55),0,1);
    return clamp(enhanced+(edge[i]-.12)*edgeBoost*.23,0,1);
@@ -30,6 +30,7 @@ function build(gray,w,h,s,style){
  const polar=(r,a,ox=0,oy=0)=>[C+cx+ox+r*Math.cos(a),C+cy+oy+r*Math.sin(a)];
  const add=(points,width=line,opacity=1)=>{if(points.length>1)paths.push({points,width,opacity});};
  const thetaMax=turns*Math.PI*2,steps=Math.max(9000,turns*430);
+
  if(style==='single'){
    const pts=[];for(let i=0;i<=steps;i++){const t=i/steps,a=t*thetaMax+rot,r=5+(R-5)*t,[x,y]=polar(r,a),lum=sample(x-C,y-C),contrast=(.5-lum)*2;const edgeWarp=(lum-.5)*edgeBoost*10;const warped=r+contrast*density*fidelity*25*Math.sin(t*thetaMax*.17)+edgeWarp;pts.push(polar(warped,a));}add(pts);
  }
@@ -53,7 +54,6 @@ function build(gray,w,h,s,style){
    for(let k=0;k<count;k++){const pts=[],base=12+(R-12)*k/count;for(let j=0;j<=per;j++){const a=j/per*Math.PI*2+rot,[x,y]=polar(base,a),lum=sample(x-C,y-C),d=(.5-lum)*density*fidelity*39,organic=Math.sin(a*2.3+k*.23)*4+Math.cos(a*5-k*.11)*2;pts.push(polar(base+d+organic,a));}add(pts,line*.72,.9);}
  }
  if(style==='multi'){
-   // Three overlapping spiral centres; designed for portraits and graphic compositions.
    const centres=[[-112,-62],[112,-62],[0,112]],localR=315,localSteps=Math.max(5200,turns*300);
    centres.forEach(([ox,oy],idx)=>{const pts=[];for(let i=0;i<=localSteps;i++){const t=i/localSteps,a=t*thetaMax+rot+idx*2.094,r=4+(localR-4)*t,[x,y]=polar(r,a,ox,oy),lum=sample(x-C,y-C),warp=(.5-lum)*density*fidelity*24*Math.sin(t*thetaMax*.14)+(lum-.5)*edgeBoost*8;pts.push(polar(clamp(r+warp,2,localR+24),a,ox,oy));}add(pts,line*.78,.92);});
  }
