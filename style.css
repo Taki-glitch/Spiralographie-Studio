@@ -4,3 +4,9 @@
 @media(max-width:1000px){.layout{grid-template-columns:315px minmax(0,1fr)}.sidebar{padding:16px}.shell{padding-left:22px;padding-right:22px}}
 @media(max-width:760px){.shell{padding-top:28px}.layout{grid-template-columns:1fr}.studio{grid-row:1}.sidebar{grid-row:2}.artboard{min-height:280px;max-height:none}.hero{margin-bottom:22px}.hero p{font-size:12px}.export-panel{align-items:flex-start;flex-direction:column}.export-controls{width:100%;flex-wrap:wrap}.export-controls label{margin-right:auto}}
 @media(max-width:450px){.topbar{padding:0 14px}.privacy{font-size:7px}.shell{padding-left:13px;padding-right:13px}.studio-head small{display:none}.head-actions button{padding:6px}.art-meta span:nth-child(2){display:none}footer{gap:12px;flex-direction:column}.export-controls label{width:100%}}
+
+.preset-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:16px 0 9px}.preset-btn{border:1px solid #465165;background:#222a38;color:#cbd0d8;border-radius:5px;padding:8px 4px;font:9px 'DM Sans';cursor:pointer}.preset-btn:hover{border-color:var(--gold);color:var(--gold2)}.save-row{display:flex;justify-content:space-between;margin-top:9px}.save-row .link-btn{font-size:9px}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}.studio-head .status-dot{flex:none}
+
+/* V5: accommodate the additional preset and plotter export control. */
+.preset-row{flex-wrap:wrap}
+.export-controls{flex-wrap:wrap}
