@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11151d">
+  <meta name="description" content="Spiralographie Studio V2 — transformez vos photos en œuvres génératives.">
+  <title>Spiralographie Studio — V2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-icon">◎</span><span>SPIRALOGRAPHIE <b>STUDIO</b><small>CREATIVE EDITION / V2</small></span></a>
+  <div class="top-actions"><span class="privacy"><i></i> PHOTO TRAITÉE LOCALEMENT</span><button id="helpBtn" class="icon-btn" title="Aide">?</button></div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div class="kicker">LABORATOIRE D'ART GÉNÉRATIF</div>
+    <h1>Transformez vos images<br>en <em>œuvres spiralées.</em></h1>
+    <p>Un atelier créatif pour explorer les lignes, les courbes et les contrastes. Importez une photo, composez votre style, puis exportez votre création en haute définition.</p>
+  </section>
+
+  <section class="layout">
+    <aside class="sidebar">
+      <section class="control-section">
+        <div class="section-title"><span>01</span> IMAGE SOURCE</div>
+        <label class="dropzone" id="dropzone" for="fileInput">
+          <input type="file" id="fileInput" accept="image/*">
+          <span class="plus">＋</span><b>Importer une image</b>
+          <small>JPG, PNG ou WEBP · glisser-déposer</small>
+        </label>
+        <div class="inline-actions"><button id="sampleBtn" class="link-btn">Charger un portrait démo</button><button id="removeBtn" class="link-btn quiet">Retirer</button></div>
+        <div class="crop-row">
+          <label for="fitMode">Cadrage</label>
+          <select id="fitMode"><option value="cover">Remplir le carré</option><option value="contain">Image entière</option></select>
+        </div>
+      </section>
+
+      <section class="control-section">
+        <div class="section-title"><span>02</span> UNIVERS ARTISTIQUE</div>
+        <div class="style-list" id="styleList">
+          <button class="style-option selected" data-style="single"><span class="style-icon">◉</span><span><b>Spirale continue</b><small>Un seul tracé enroulé</small></span><i>01</i></button>
+          <button class="style-option" data-style="ripple"><span class="style-icon">◎</span><span><b>Ondes concentriques</b><small>Anneaux modulés par l'image</small></span><i>02</i></button>
+          <button class="style-option" data-style="guilloche"><span class="style-icon">✳</span><span><b>Guilloché</b><small>Motifs fins et entrelacés</small></span><i>03</i></button>
+          <button class="style-option" data-style="topo"><span class="style-icon">⌁</span><span><b>Topographie</b><small>Reliefs et lignes de niveau</small></span><i>04</i></button>
+          <button class="style-option" data-style="radial"><span class="style-icon">✺</span><span><b>Rayonnement</b><small>Spirales et rayons circulaires</small></span><i>05</i></button>
+          <button class="style-option" data-style="woven"><span class="style-icon">⤨</span><span><b>Entrelacs</b><small>Deux flux en opposition</small></span><i>06</i></button>
+          <button class="style-option" data-style="contour"><span class="style-icon">≋</span><span><b>Courbes organiques</b><small>Rubans fluides et irréguliers</small></span><i>07</i></button>
+        </div>
+      </section>
+
+      <section class="control-section">
+        <div class="section-title"><span>03</span> PARAMÈTRES</div>
+        <div class="range-control"><div><label for="turns">Tours / complexité</label><output id="turnsVal">38</output></div><input id="turns" type="range" min="8" max="90" value="38"></div>
+        <div class="range-control"><div><label for="density">Contraste des formes</label><output id="densityVal">72</output></div><input id="density" type="range" min="0" max="100" value="72"></div>
+        <div class="range-control"><div><label for="line">Épaisseur des lignes</label><output id="lineVal">1.1</output></div><input id="line" type="range" min="3" max="30" value="11"></div>
+        <div class="range-control"><div><label for="fidelity">Fidélité à la photo</label><output id="fidelityVal">80</output></div><input id="fidelity" type="range" min="0" max="100" value="80"></div>
+        <div class="range-control"><div><label for="rotation">Rotation</label><output id="rotationVal">0°</output></div><input id="rotation" type="range" min="0" max="360" value="0"></div>
+        <div class="range-control"><div><label for="softness">Adoucissement</label><output id="softnessVal">25</output></div><input id="softness" type="range" min="0" max="100" value="25"></div>
+        <div class="color-grid">
+          <label>Encre <input id="ink" type="color" value="#171923"></label>
+          <label>Support <input id="paper" type="color" value="#f5f1e9"></label>
+        </div>
+        <label class="check"><input id="invert" type="checkbox"> Inverser les ombres et lumières</label>
+        <div class="button-row"><button id="resetBtn" class="outline-btn">Réinitialiser</button><button id="generateBtn" class="gold-btn">✦ Générer</button></div>
+      </section>
+    </aside>
+
+    <section class="studio">
+      <div class="studio-head">
+        <div><span class="status-dot"></span><b>ESPACE DE CRÉATION</b><small id="status">En attente d'une image</small></div>
+        <div class="head-actions"><button id="compareBtn" class="outline-btn" disabled>Voir l'original</button><button id="fullscreenBtn" class="outline-btn">Plein écran</button></div>
+      </div>
+      <div class="artboard" id="artboard">
+        <canvas id="artCanvas" width="1000" height="1000"></canvas>
+        <div class="empty" id="empty"><div>◎</div><b>Votre toile est vierge</b><span>Importez une image pour commencer.</span></div>
+        <div class="busy" id="busy"><span></span> Création de votre œuvre…</div>
+      </div>
+      <div class="art-meta"><span id="metaSize">1000 × 1000 px</span><span id="metaStyle">SPIRALE CONTINUE</span><span id="metaCurves">0 tracé</span></div>
+      <div class="export-panel">
+        <div><b>EXPORTER L'ŒUVRE</b><small>PNG haute définition ou SVG vectoriel</small></div>
+        <div class="export-controls"><label for="resolution">Résolution PNG</label><select id="resolution"><option value="1000">1000 px</option><option value="2000" selected>2000 px</option><option value="3000">3000 px</option><option value="4000">4000 px</option></select><button id="pngBtn" class="export-btn" disabled>↓ PNG</button><button id="svgBtn" class="export-btn" disabled>↓ SVG</button></div>
+      </div>
+      <div class="note"><span>✳</span><p><b>Conseil d'atelier</b> — Pour un portrait, choisis une photo cadrée près du visage, avec une lumière latérale et un arrière-plan simple. Augmente la fidélité pour faire ressortir les traits, puis ajuste le contraste pour renforcer les ombres.</p></div>
+    </section>
+  </section>
+  <footer><span>SPIRALOGRAPHIE STUDIO V2</span><span>Création locale · Aucun compte · Aucun envoi de photo</span></footer>
+</main>
+
+<dialog id="helpDialog">
+  <form method="dialog" class="dialog-inner">
+    <button class="dialog-close" aria-label="Fermer">×</button>
+    <div class="kicker">GUIDE RAPIDE</div><h2>Créer votre première œuvre</h2>
+    <ol><li>Importez une photo ou chargez le portrait de démonstration.</li><li>Choisissez un style dans la liste. Chaque style utilise une construction de courbes différente.</li><li>Ajustez les tours, le contraste et la fidélité. Les changements relancent le rendu.</li><li>Exportez en PNG pour l'impression ou en SVG pour agrandir sans pixellisation.</li></ol>
+    <p class="dialog-note">Le mode « Spirale continue » dessine un chemin continu dans l'image. Les autres styles utilisent plusieurs courbes. Cette application produit des œuvres graphiques génératives : elle ne garantit pas une reproduction photographique parfaite.</p>
+    <button class="gold-btn">Compris</button>
+  </form>
+</dialog>
+<script src="app.js"></script>
+</body>
+</html>
