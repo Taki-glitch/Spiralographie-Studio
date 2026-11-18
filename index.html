@@ -4,107 +4,231 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#11151d">
-  <meta name="description" content="Spiralographie Studio V5 — transformez vos photos en œuvres génératives.">
-  <title>Spiralographie Studio — V5</title>
+  <meta name="description" content="Spiralographie Studio V6 — Color Studio et remplissage artistique avancé.">
+  <title>Spiralographie Studio — V6</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="topbar">
-  <a class="brand" href="#"><span class="brand-icon">◎</span><span>SPIRALOGRAPHIE <b>STUDIO</b><small>CREATIVE EDITION / V5</small></span></a>
-  <div class="top-actions"><span class="privacy"><i></i> PHOTO TRAITÉE LOCALEMENT</span><button id="helpBtn" class="icon-btn" title="Aide">?</button></div>
+  <a class="brand" href="#"><span class="brand-icon">◎</span><span>SPIRALOGRAPHIE <b>STUDIO</b><small>COLOR EDITION / V6</small></span></a>
+  <div class="top-actions"><span class="privacy"><i></i> TRAITEMENT LOCAL & SÉCURISÉ</span><button id="helpBtn" class="icon-btn" title="Aide">?</button></div>
 </header>
 
 <main class="shell">
   <section class="hero">
-    <div class="kicker">LABORATOIRE D'ART GÉNÉRATIF</div>
-    <h1>Transformez vos images<br>en <em>œuvres spiralées.</em></h1>
-    <p>Un atelier créatif pour explorer les lignes, les courbes et les contrastes. Importez une photo, composez votre style, puis exportez votre création en haute définition.</p>
+    <div class="kicker">ATELIER DE COLORATION & ART GÉNÉRATIF</div>
+    <h1>Sublimez vos spirales<br>avec le <em>Color Studio.</em></h1>
+    <p>Atelier professionnel de coloration simultanée des traits et des espaces. Importez une photo, appliquez des dégradés artistiques, des ambiances Noir & Or ou des palettes multicolores.</p>
   </section>
 
   <section class="layout">
     <aside class="sidebar">
-      <section class="control-section">
-        <div class="section-title"><span>01</span> IMAGE SOURCE</div>
-        <label class="dropzone" id="dropzone" for="fileInput">
-          <input type="file" id="fileInput" accept="image/*">
-          <span class="plus">＋</span><b>Importer une image</b>
-          <small>JPG, PNG ou WEBP · glisser-déposer</small>
-        </label>
-        <div class="inline-actions"><button id="sampleBtn" class="link-btn">Charger un portrait démo</button><button id="removeBtn" class="link-btn quiet">Retirer</button></div>
-        <div class="crop-row">
-          <label for="fitMode">Cadrage</label>
-          <select id="fitMode"><option value="cover">Remplir le carré</option><option value="contain">Image entière</option></select>
-        </div>
-      </section>
+      <!-- Onglets de navigation latéraux -->
+      <div class="sidebar-tabs">
+        <button class="tab-btn active" data-tab="source">1. Source</button>
+        <button class="tab-btn" data-tab="style">2. Styles</button>
+        <button class="tab-btn" data-tab="color">3. Color Studio</button>
+        <button class="tab-btn" data-tab="settings">4. Paramètres</button>
+      </div>
 
-      <section class="control-section">
-        <div class="section-title"><span>02</span> UNIVERS ARTISTIQUE</div>
-        <div class="style-list" id="styleList">
-          <button class="style-option selected" data-style="single"><span class="style-icon">◉</span><span><b>Spirale continue</b><small>Un seul tracé enroulé</small></span><i>01</i></button>
-          <button class="style-option" data-style="ripple"><span class="style-icon">◎</span><span><b>Ondes concentriques</b><small>Anneaux modulés par l'image</small></span><i>02</i></button>
-          <button class="style-option" data-style="guilloche"><span class="style-icon">✳</span><span><b>Guilloché</b><small>Motifs fins et entrelacés</small></span><i>03</i></button>
-          <button class="style-option" data-style="topo"><span class="style-icon">⌁</span><span><b>Topographie</b><small>Reliefs et lignes de niveau</small></span><i>04</i></button>
-          <button class="style-option" data-style="radial"><span class="style-icon">✺</span><span><b>Rayonnement</b><small>Spirales et rayons circulaires</small></span><i>05</i></button>
-          <button class="style-option" data-style="woven"><span class="style-icon">⤨</span><span><b>Entrelacs</b><small>Deux flux en opposition</small></span><i>06</i></button>
-          <button class="style-option" data-style="contour"><span class="style-icon">≋</span><span><b>Courbes organiques</b><small>Rubans fluides et irréguliers</small></span><i>07</i></button>
-          <button class="style-option" data-style="multi"><span class="style-icon">✺</span><span><b>Multicentrique</b><small>Trois spirales entrelacées</small></span><i>08</i></button>
-        </div>
-      </section>
+      <!-- Panneau 1 : Image Source & Géométrie -->
+      <div class="tab-panel active" id="panel-source">
+        <section class="control-section">
+          <div class="section-title"><span>01</span> IMAGE SOURCE</div>
+          <label class="dropzone" id="dropzone" for="fileInput">
+            <input type="file" id="fileInput" accept="image/*">
+            <span class="plus">＋</span><b>Importer une image</b>
+            <small>JPG, PNG ou WEBP · glisser-déposer</small>
+          </label>
+          <div class="inline-actions"><button id="sampleBtn" class="link-btn">Charger un portrait démo</button><button id="removeBtn" class="link-btn quiet">Retirer</button></div>
+          <div class="crop-row">
+            <label for="fitMode">Cadrage</label>
+            <select id="fitMode"><option value="cover">Remplir le carré</option><option value="contain">Image entière</option></select>
+          </div>
+        </section>
 
-      <section class="control-section">
-        <div class="section-title"><span>03</span> PARAMÈTRES</div>
-        <div class="range-control"><div><label for="turns">Tours / complexité</label><output id="turnsVal">38</output></div><input id="turns" type="range" min="8" max="90" value="38"></div>
-        <div class="range-control"><div><label for="density">Contraste des formes</label><output id="densityVal">72</output></div><input id="density" type="range" min="0" max="100" value="72"></div>
-        <div class="range-control"><div><label for="line">Épaisseur des lignes</label><output id="lineVal">1.1</output></div><input id="line" type="range" min="3" max="30" value="11"></div>
-        <div class="range-control"><div><label for="fidelity">Fidélité à la photo</label><output id="fidelityVal">80</output></div><input id="fidelity" type="range" min="0" max="100" value="80"></div>
-        <div class="range-control"><div><label for="rotation">Rotation</label><output id="rotationVal">0°</output></div><input id="rotation" type="range" min="0" max="360" value="0"></div>
-        <div class="range-control"><div><label for="centerX">Décalage horizontal</label><output id="centerXVal">0</output></div><input id="centerX" type="range" min="-100" max="100" value="0"></div>
-        <div class="range-control"><div><label for="centerY">Décalage vertical</label><output id="centerYVal">0</output></div><input id="centerY" type="range" min="-100" max="100" value="0"></div>
-        <div class="range-control"><div><label for="softness">Adoucissement</label><output id="softnessVal">25</output></div><input id="softness" type="range" min="0" max="100" value="25"></div>
-        <div class="range-control"><div><label for="detail">Détails locaux</label><output id="detailVal">55</output></div><input id="detail" type="range" min="0" max="100" value="55"></div>
-        <div class="range-control"><div><label for="edges">Renfort des contours</label><output id="edgesVal">55</output></div><input id="edges" type="range" min="0" max="100" value="55"></div>
-        <div class="color-grid">
-          <label>Encre <input id="ink" type="color" value="#171923"></label>
-          <label>Support <input id="paper" type="color" value="#f5f1e9"></label>
-        </div>
-        <label class="check"><input id="invert" type="checkbox"> Inverser les ombres et lumières</label>
-        <div class="preset-row">
-          <button class="preset-btn" data-preset="portrait">Portrait</button>
-          <button class="preset-btn" data-preset="paysage">Paysage</button>
-          <button class="preset-btn" data-preset="fin">Trait fin</button><button class="preset-btn" data-preset="detail">Portrait détaillé</button>
-        </div>
-        <div class="button-row"><button id="resetBtn" class="outline-btn">Réinitialiser</button><button id="generateBtn" class="gold-btn">✦ Générer</button></div>
-        <div class="save-row"><button id="saveSettingsBtn" class="link-btn">Enregistrer mes réglages</button><button id="loadSettingsBtn" class="link-btn quiet">Recharger</button></div>
-      </section>
+        <section class="control-section">
+          <div class="section-title"><span>GÉOMÉTRIE DE BASE</span></div>
+          <div class="range-control"><div><label for="turns">Tours / complexité</label><output id="turnsVal">38</output></div><input id="turns" type="range" min="8" max="90" value="38"></div>
+          <div class="range-control"><div><label for="density">Contraste des formes</label><output id="densityVal">72</output></div><input id="density" type="range" min="0" max="100" value="72"></div>
+          <div class="range-control"><div><label for="line">Épaisseur des lignes</label><output id="lineVal">1.1</output></div><input id="line" type="range" min="3" max="30" value="11"></div>
+          <div class="range-control"><div><label for="fidelity">Fidélité à la photo</label><output id="fidelityVal">80</output></div><input id="fidelity" type="range" min="0" max="100" value="80"></div>
+          <div class="range-control"><div><label for="rotation">Rotation</label><output id="rotationVal">0°</output></div><input id="rotation" type="range" min="0" max="360" value="0"></div>
+        </section>
+      </div>
+
+      <!-- Panneau 2 : Styles de Spiralographie -->
+      <div class="tab-panel" id="panel-style">
+        <section class="control-section">
+          <div class="section-title"><span>02</span> UNIVERS GÉOMÉTRIQUE</div>
+          <div class="style-list" id="styleList">
+            <button class="style-option selected" data-style="single"><span class="style-icon">◉</span><span><b>Spirale continue</b><small>Un seul tracé enroulé</small></span><i>01</i></button>
+            <button class="style-option" data-style="ripple"><span class="style-icon">◎</span><span><b>Ondes concentriques</b><small>Anneaux modulés par l'image</small></span><i>02</i></button>
+            <button class="style-option" data-style="guilloche"><span class="style-icon">✳</span><span><b>Guilloché</b><small>Motifs fins et entrelacés</small></span><i>03</i></button>
+            <button class="style-option" data-style="topo"><span class="style-icon">⌁</span><span><b>Topographie</b><small>Reliefs et lignes de niveau</small></span><i>04</i></button>
+            <button class="style-option" data-style="radial"><span class="style-icon">✺</span><span><b>Rayonnement</b><small>Spirales et rayons circulaires</small></span><i>05</i></button>
+            <button class="style-option" data-style="woven"><span class="style-icon">⤨</span><span><b>Entrelacs</b><small>Deux flux en opposition</small></span><i>06</i></button>
+            <button class="style-option" data-style="contour"><span class="style-icon">≋</span><span><b>Courbes organiques</b><small>Rubans fluides et irréguliers</small></span><i>07</i></button>
+            <button class="style-option" data-style="multi"><span class="style-icon">✺</span><span><b>Multicentrique</b><small>Trois spirales entrelacées</small></span><i>08</i></button>
+          </div>
+        </section>
+      </div>
+
+      <!-- Panneau 3 : Color Studio -->
+      <div class="tab-panel" id="panel-color">
+        <section class="control-section">
+          <div class="section-title"><span>03</span> COLOR STUDIO (BOTH)</div>
+          
+          <div class="crop-row" style="margin-bottom:12px">
+            <label for="colorModeSelect">Mode Artistique</label>
+            <select id="colorModeSelect">
+              <option value="classic">Classique / Unicolore</option>
+              <option value="gold">Noir & Or (Luxe)</option>
+              <option value="gradient">Dégradé Artistique</option>
+              <option value="selective">Couleur Sélective</option>
+              <option value="multicolor">Multicolore & Arc-en-ciel</option>
+            </select>
+          </div>
+
+          <!-- Options spécifiques selon le mode -->
+          <div id="subModeOptions" class="sub-mode-box" style="margin-bottom:12px">
+            <!-- Injecté dynamiquement ou géré par classes -->
+          </div>
+
+          <div class="crop-row" style="margin-bottom:10px">
+            <label for="goldVariant">Variante Or / Thème</label>
+            <select id="goldVariant">
+              <option value="champagne">Or Champagne</option>
+              <option value="metallic">Or Métallique</option>
+              <option value="bronze">Bronze Ancien</option>
+              <option value="copper">Cuivre Rouge</option>
+            </select>
+          </div>
+
+          <div class="crop-row" style="margin-bottom:10px">
+            <label for="gradientType">Sens du Dégradé</label>
+            <select id="gradientType">
+              <option value="spiral">Suivant la spirale</option>
+              <option value="radial">Radial (Centre -> Ext.)</option>
+              <option value="linear">Linéaire horizontal</option>
+              <option value="circular">Circulaire angulaire</option>
+            </select>
+          </div>
+
+          <div class="range-control">
+            <div><label for="selectiveAmount">Quantité de couleur sélective</label><output id="selectiveVal">50%</output></div>
+            <input id="selectiveAmount" type="range" min="10" max="100" value="50">
+          </div>
+
+          <div style="display:flex; gap:8px; margin:12px 0;">
+            <button id="randPaletteBtn" class="outline-btn" style="flex:1">🎲 Palette aléatoire</button>
+            <button id="savePaletteBtn" class="outline-btn" style="flex:1">💾 Sauvegarder</button>
+          </div>
+
+          <div class="section-title" style="margin-top:16px"><span>REMPLISSAGE DES ESPACES</span></div>
+          <label class="check"><input id="enableFill" type="checkbox" checked> Activer le remplissage entre les traits</label>
+          <div class="range-control">
+            <div><label for="fillOpacity">Opacité du remplissage</label><output id="fillOpacityVal">35%</output></div>
+            <input id="fillOpacity" type="range" min="0" max="100" value="35">
+          </div>
+          <div class="range-control">
+            <div><label for="fillTolerance">Tolérance des régions</label><output id="fillToleranceVal">45</output></div>
+            <input id="fillTolerance" type="range" min="5" max="100" value="45">
+          </div>
+          <div class="range-control">
+            <div><label for="traitProtection">Protection des traits</label><output id="traitProtectionVal">2.0</output></div>
+            <input id="traitProtection" type="range" min="0" max="50" value="20">
+          </div>
+
+          <div class="section-title" style="margin-top:16px"><span>FOND PERSONNALISÉ</span></div>
+          <div class="crop-row" style="margin-bottom:10px">
+            <label for="bgType">Type de fond</label>
+            <select id="bgType">
+              <option value="solid">Couleur unie / Custom</option>
+              <option value="paper">Papier ivoire classique</option>
+              <option value="dark">Noir profond</option>
+              <option value="transparent">Transparent (Export PNG/SVG)</option>
+            </select>
+          </div>
+          <div class="color-grid">
+            <label>Trait <input id="ink" type="color" value="#171923"></label>
+            <label>Fond <input id="paper" type="color" value="#f5f1e9"></label>
+          </div>
+        </section>
+      </div>
+
+      <!-- Panneau 4 : Réglages avancés & Export -->
+      <div class="tab-panel" id="panel-settings">
+        <section class="control-section">
+          <div class="section-title"><span>04</span> RÉGLAGES AVANCÉS & FINITIONS</div>
+          <div class="range-control"><div><label for="colorSaturation">Saturation</label><output id="colorSaturationVal">100%</output></div><input id="colorSaturation" type="range" min="0" max="200" value="100"></div>
+          <div class="range-control"><div><label for="colorBrightness">Luminosité</label><output id="colorBrightnessVal">100%</output></div><input id="colorBrightness" type="range" min="0" max="200" value="100"></div>
+          <div class="range-control"><div><label for="detail">Détails locaux</label><output id="detailVal">55</output></div><input id="detail" type="range" min="0" max="100" value="55"></div>
+          <div class="range-control"><div><label for="edges">Renfort des contours</label><output id="edgesVal">55</output></div><input id="edges" type="range" min="0" max="100" value="55"></div>
+          <label class="check"><input id="invert" type="checkbox"> Inverser les ombres et lumières</label>
+
+          <div class="preset-row" style="margin-top:14px">
+            <button class="preset-btn" data-preset="portrait">Portrait</button>
+            <button class="preset-btn" data-preset="paysage">Paysage</button>
+            <button class="preset-btn" data-preset="fin">Trait fin</button>
+            <button class="preset-btn" data-preset="luxe">Noir & Or</button>
+          </div>
+          <div class="button-row" style="margin-top:12px"><button id="resetBtn" class="outline-btn">Réinitialiser</button><button id="generateBtn" class="gold-btn">✦ Générer V6</button></div>
+          <div class="save-row"><button id="saveSettingsBtn" class="link-btn">Enregistrer mes réglages</button><button id="loadSettingsBtn" class="link-btn quiet">Recharger</button></div>
+        </section>
+      </div>
+
     </aside>
 
     <section class="studio">
       <div class="studio-head">
-        <div><span class="status-dot"></span><b>ESPACE DE CRÉATION</b><small id="status">En attente d'une image</small></div>
-        <div class="head-actions"><button id="compareBtn" class="outline-btn" disabled>Voir l'original</button><button id="fullscreenBtn" class="outline-btn">Plein écran</button></div>
+        <div><span class="status-dot"></span><b>ESPACE DE CRÉATION V6</b><small id="status">En attente d'une image</small></div>
+        <div class="head-actions">
+          <button id="compareBtn" class="outline-btn" disabled>Voir l'original</button>
+          <button id="undoBtn" class="outline-btn" title="Annuler" disabled>↶</button>
+          <button id="fullscreenBtn" class="outline-btn">Plein écran</button>
+        </div>
       </div>
       <div class="artboard" id="artboard">
         <canvas id="artCanvas" width="1000" height="1000"></canvas>
-        <div class="empty" id="empty"><div>◎</div><b>Votre toile est vierge</b><span>Importez une image pour commencer.</span></div>
-        <div class="busy" id="busy"><span></span> Création de votre œuvre…</div>
+        <div class="empty" id="empty"><div>◎</div><b>Votre toile est prête</b><span>Importez une image pour lancer le Color Studio.</span></div>
+        <div class="busy" id="busy"><span></span> Rendu du Color Studio et remplissage des espaces…</div>
       </div>
       <div class="art-meta"><span id="metaSize">1000 × 1000 px</span><span id="metaStyle">SPIRALE CONTINUE</span><span id="metaCurves">0 tracé</span></div>
+      
       <div class="export-panel">
-        <div><b>EXPORTER L'ŒUVRE</b><small>PNG haute définition ou SVG vectoriel</small></div>
-        <div class="export-controls"><label for="resolution">Résolution PNG</label><select id="resolution"><option value="1000">1000 px</option><option value="2000" selected>2000 px</option><option value="3000">3000 px</option><option value="4000">4000 px</option></select><button id="pngBtn" class="export-btn" disabled>↓ PNG</button><button id="svgBtn" class="export-btn" disabled>↓ SVG</button><button id="pltBtn" class="export-btn" disabled>↓ PLT</button></div>
+        <div><b>EXPORTER L'ŒUVRE V6</b><small>PNG HD, SVG coloré vectoriel, HPGL & Projet JSON</small></div>
+        <div class="export-controls">
+          <label for="resolution">Format</label>
+          <select id="resolution">
+            <option value="1000">1000 px</option>
+            <option value="2000" selected>2000 px</option>
+            <option value="3000">3000 px</option>
+            <option value="4000">4000 px</option>
+          </select>
+          <button id="pngBtn" class="export-btn" disabled>↓ PNG</button>
+          <button id="svgBtn" class="export-btn" disabled>↓ SVG</button>
+          <button id="pltBtn" class="export-btn" disabled>↓ PLT</button>
+          <button id="jsonBtn" class="export-btn" disabled title="Exporter les paramètres et la palette en JSON">↓ Projet</button>
+        </div>
       </div>
-      <div class="note"><span>✳</span><p><b>Nouveautés V5</b> — Renforcement adaptatif du contraste local, détection mathématique des contours, nouveau style multicentrique et export PLT/HPGL pour traceur. Le calcul reste local : aucune reconnaissance faciale par IA n’est revendiquée.</p></div>
+
+      <div class="note"><span>✳</span><p><b>Color Studio V6</b> — Coloration simultanée des traits et des espaces intermédiaires, moteurs de dégradés artistiques, modes Noir & Or et palettes personnalisables. Fonctionne entièrement en local dans votre navigateur.</p></div>
     </section>
   </section>
-  <footer><span>SPIRALOGRAPHIE STUDIO V5</span><span>Création locale · Aucun compte · Aucun envoi de photo</span></footer>
+  <footer><span>SPIRALOGRAPHIE STUDIO V6</span><span>Création locale · Color Studio intégré · Aucun envoi de données</span></footer>
 </main>
 
 <dialog id="helpDialog">
   <form method="dialog" class="dialog-inner">
     <button class="dialog-close" aria-label="Fermer">×</button>
-    <div class="kicker">GUIDE RAPIDE</div><h2>Créer votre première œuvre</h2>
-    <ol><li>Importez une photo ou chargez le portrait de démonstration.</li><li>Choisissez un style dans la liste. Chaque style utilise une construction de courbes différente.</li><li>Ajustez les tours, le contraste et la fidélité. Les changements relancent le rendu. Le réglage « Renfort des contours » accentue les transitions de l’image sans détection faciale dédiée.</li><li>Exportez en PNG pour l'impression ou en SVG pour agrandir sans pixellisation.</li></ol>
-    <p class="dialog-note">Le mode « Spirale continue » dessine un chemin continu dans l'image. Les autres styles utilisent plusieurs courbes. Cette application produit des œuvres graphiques génératives : elle ne garantit pas une reproduction photographique parfaite.</p>
+    <div class="kicker">GUIDE DE LA V6</div><h2>Atelier de couleur & Remplissage</h2>
+    <ol>
+      <li><b>Importez votre image</b> depuis le panneau source.</li>
+      <li><b>Naviguez entre les onglets</b> latéraux pour choisir votre style géométrique et configurer le <b>Color Studio</b>.</li>
+      <li><b>Sélectionnez un mode artistique</b> (Noir & Or, Dégradé artistique, Couleur sélective ou Multicolore) et activez le remplissage des espaces intermédiaires.</li>
+      <li><b>Exportez votre œuvre</b> en PNG haute résolution, en SVG vectoriel ou sauvegardez votre projet complet au format JSON.</li>
+    </ol>
     <button class="gold-btn">Compris</button>
   </form>
 </dialog>
